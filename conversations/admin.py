@@ -8,10 +8,10 @@ from conversations.models import Conversation, Message
 
 @admin.register(Message)
 class MessageAdmin(ModelAdmin):
-    pass
+    list_display = ("__str__", "created_at")
 
 
 @admin.register(Conversation)
 class ConversationAdmin(ModelAdmin):
-    pass
+    list_display = ("__str__", "count_messages", "count_participants")
 

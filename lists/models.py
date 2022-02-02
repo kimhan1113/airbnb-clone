@@ -12,6 +12,9 @@ class List(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rooms = models.ManyToManyField(Room, blank=True)
 
+    def count_rooms(self):
+        return self.rooms.count()
+
     def __str__(self):
         return self.name
 

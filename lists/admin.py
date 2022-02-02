@@ -8,4 +8,8 @@ from lists.models import List
 
 @admin.register(List)
 class ListAdmin(ModelAdmin):
-    pass
+    list_display = ("name", "user", "count_rooms")
+
+    search_fields = ("name",)
+
+    filter_horizontal = ("rooms",)

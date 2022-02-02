@@ -8,4 +8,14 @@ from reservations.models import Reservation
 
 @admin.register(Reservation)
 class ReservationAdmin(ModelAdmin):
-    pass
+    list_display = [
+        'room',
+        'status',
+        'check_in',
+        'check_out',
+        'guest',
+        'is_finished',
+        'in_progress',
+    ]
+
+    list_filter = ("status",)
