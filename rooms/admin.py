@@ -31,7 +31,7 @@ class RoomAdmin(ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields" : ("name", "description", "country", "address", "price")},
+            {"fields" : ("name", "description", "country", "city", "address", "price")},
         ),
         (
             "Times",
@@ -101,6 +101,12 @@ class RoomAdmin(ModelAdmin):
     # @admin.display(empty_value='unknown')
     # def amenities_view(self, obj):
     #      return obj.amenities
+
+    # 어드민을 컨트롤함!
+    # def save_model(self, request, obj, form, change):
+    #     # obj.user = request.user
+    #     print(obj, form, change)
+    #     super().save_model(request, obj, form, change)
 
     def count_amenities(self, obj):
         # print(obj)
