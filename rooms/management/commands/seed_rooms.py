@@ -32,7 +32,9 @@ class Command(BaseCommand):
                 "beds": lambda x: random.randint(1, 5),
                 "bedrooms": lambda x: random.randint(1, 5),
                 "baths": lambda x: random.randint(1, 5),
-            },
+            }
+
+
         )
         created_photos = seeder.execute()
         created_clean = flatten(list(created_photos.values()))

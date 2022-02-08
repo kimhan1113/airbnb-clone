@@ -6,7 +6,7 @@ from users.models import User
 
 
 class Conversation(TimeStampedModel):
-    participants = models.ManyToManyField(User, blank=True)
+    participants = models.ManyToManyField(User, related_name="converstation", blank=True)
 
     def __str__(self):
         usernames = []
