@@ -19,11 +19,26 @@ class Command(BaseCommand):
             "--number", default=2, type=int, help=f"How many {NAME} you want to create"
         )
 
+    def random_date(self, num):
+        date_list = []
+
+        for i in range(num):
+            start = datetime(2020, 1, 1)
+            end = datetime(2022, 2, 9)
+            random_date = start + (end-start) * random.random()
+            date_list.append(random_date)
+
+        return date_list
+
+
     def handle(self, *args, **options):
         number = options.get("number")
         seeder = Seed.seeder()
         users = user_models.User.objects.all()
         rooms = room_models.Room.objects.all()
+
+        # date_list = self.random_date(number)
+
         seeder.add_entity(
             reservation_models.Reservation,
             number,
@@ -32,8 +47,13 @@ class Command(BaseCommand):
                 "guest": lambda x: random.choice(users),
                 "room": lambda x: random.choice(rooms),
                 "check_in": lambda x: datetime.now(),
+                # "check_in": lambda x: random.choice(date_list),
+
                 "check_out": lambda x: datetime.now()
                 + timedelta(days=random.randint(3, 25)),
+
+                # "check_out": lambda x: random.choice(date_list)
+                # + timedelta(days=random.randint(3, 25)),
             },
         )
 
