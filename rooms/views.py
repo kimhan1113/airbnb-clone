@@ -4,7 +4,8 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from . import models
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
+from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -39,9 +40,13 @@ class HomeView(ListView):
     ordering = "created_at"
     context_object_name = "rooms"
 
-def room_detail(request, pk):
-    try:
-        room = models.Room.objects.get(pk=pk)
-        return render(request, "rooms/detail.html", {"room": room})
-    except models.Room.DoesNotExist:
-        return redirect(reverse("core:home"))
+class RoomDetail(DetailView):
+
+    """ RoomDetail Definition """
+
+    model = models.Room
+
+def search(request):
+    city = request.GET.get("city")
+    city = str.capitalize(city)
+    return render(request, "rooms/search.html", {"city": city})
