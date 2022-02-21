@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from . import models
 from django.views.generic import ListView
 from django.shortcuts import render
+from django.urls import reverse
 
 # Create your views here.
 
@@ -39,4 +40,8 @@ class HomeView(ListView):
     context_object_name = "rooms"
 
 def room_detail(request, pk):
-    return render(request, "rooms/detail.html")
+    try:
+        room = models.Room.objects.get(pk=pk)
+        return render(request, "rooms/detail.html", {"room": room})
+    except models.Room.DoesNotExist:
+        return redirect(reverse("core:home"))
