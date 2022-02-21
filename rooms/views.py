@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from . import models
 from django.views.generic import ListView
+from django.shortcuts import render
 
 # Create your views here.
 
@@ -36,3 +37,7 @@ class HomeView(ListView):
     paginate_orphans = 5
     ordering = "created_at"
     context_object_name = "rooms"
+
+def room_detail(request, pk):
+    print(pk)
+    return render(request, "rooms/detail.html")
