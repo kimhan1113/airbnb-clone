@@ -7,6 +7,7 @@ from . import models
 from django.views.generic import ListView, DetailView
 from django.http import Http404
 from django.shortcuts import render
+from django_countries import countries
 from django.urls import reverse
 
 # Create your views here.
@@ -47,6 +48,22 @@ class RoomDetail(DetailView):
     model = models.Room
 
 def search(request):
-    city = request.GET.get("city")
+    city = request.GET.get("city", "Anywhere")
     city = str.capitalize(city)
-    return render(request, "rooms/search.html", {"city": city})
+    country = request.GET.get("country", "KR")
+    room_type = int(request.GET.get("room_type", 0))
+    room_types = models.RoomType.objects.all()
+
+    form = {"city": city, "s_room_type": room_type, "s_country": country}
+
+
+    choices = {
+        "countries": countries,
+        "room_types": room_types,
+    }
+
+    return render(
+        request,
+        "rooms/search.html",
+        {**form, **choices},
+    )
