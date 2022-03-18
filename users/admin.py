@@ -10,7 +10,7 @@ from users.models import User
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
-        ("Custom Profile", {'fields': ('avatar','bio', 'gender', 'birthdate', 'language', 'currency', 'superhost')}),
+        ("Custom Profile", {'fields': ('avatar','bio', 'gender', 'birthdate', 'language', 'currency', 'superhost', 'login_method')}),
     )
 
     list_filter = UserAdmin.list_filter + ("superhost",)
@@ -28,4 +28,5 @@ class CustomUserAdmin(UserAdmin):
         "is_superuser",
         "email_verified",
         "email_secret",
+        "login_method",
     ]

@@ -1,4 +1,6 @@
 import os
+
+import requests
 from django.shortcuts import render
 from django.views.generic import FormView
 from django.urls import reverse_lazy
@@ -76,4 +78,14 @@ def github_login(request):
 
 
 def github_callback(request):
-    pass
+    client_id = env("GH_ID")
+    client_secret = env("GH_SECRET")
+    code = request.GET.get("code", None)
+    if code is not None:
+        request = requests.post(
+            f"https://github.com/login/oauth/access_token?client_id={client_id}&client_secret={client_secret}&code={code}",
+            headers={"Accept": "application/json"},
+        )
+        print(request.json())
+    else:
+        return redirect(reverse("core:home"))
