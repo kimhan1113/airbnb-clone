@@ -1,11 +1,22 @@
+import os
 from django.shortcuts import render
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 from django.views import View
 from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
-from . import forms, models
 
+from config.settings import BASE_DIR
+from . import forms, models
+import environ
+
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 class LoginView(FormView):
     template_name = "users/login.html"
@@ -54,3 +65,15 @@ def complete_verification(request, key):
         # to do: add error message
         pass
     return redirect(reverse("core:home"))
+
+
+def github_login(request):
+    client_id = env("GH_ID")
+    redirect_uri = "http://127.0.0.1:8000/users/login/github/callback"
+    return redirect(
+        f"https://github.com/login/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&scope=read:user"
+    )
+
+
+def github_callback(request):
+    pass
