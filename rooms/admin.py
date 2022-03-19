@@ -31,7 +31,7 @@ class RoomAdmin(ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields" : ("name", "description", "country", "city", "address", "price")},
+            {"fields" : ("name", "description", "country", "city", "address", "price", "room_type")},
         ),
         (
             "Times",
@@ -74,6 +74,7 @@ class RoomAdmin(ModelAdmin):
         "count_amenities",
         "count_photos",
         "total_rating",
+        "room_type",
     ]
 
     list_filter = [
