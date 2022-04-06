@@ -101,3 +101,5 @@ __pycache__/*
 env.zip
 
 uploads/
+
+node_modules/
